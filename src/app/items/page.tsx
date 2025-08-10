@@ -34,17 +34,25 @@ export default function ItemsPage() {
         <p className="text-center text-gray-500">No items found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {items.map((item) => (
-            <div key={item.id} className="bg-white border rounded-xl shadow-lg p-6 flex flex-col gap-2">
-              <div className="text-xl font-bold text-blue-600 mb-2">{item.task}</div>
-              <div className="text-gray-700">Date: <span className="font-mono">{item.date}</span></div>
-              <div className="text-gray-700">Done by: <span className="font-semibold">{item.done_by}</span></div>
-              <div className="text-gray-700">Type: {item.type}</div>
-              <div className="text-gray-700">Quantity: {item.quantity}</div>
-              <div className="text-gray-700">Base GVT: {item.base_gvt}</div>
-              <div className="text-gray-700">GVT Earned: {item.gvt_earned}</div>
-            </div>
-          ))}
+          {items.map((item, idx) => {
+            // Highlight the most recently added item (assume last in list)
+            const isNew = idx === items.length - 1;
+            return (
+              <div
+                key={item.id}
+                className={`bg-white border rounded-xl shadow-lg p-6 flex flex-col gap-2 transition ${isNew ? "border-green-500 ring-2 ring-green-300" : ""}`}
+              >
+                <div className="text-2xl font-extrabold text-green-700 mb-2">Task: <span className="text-2xl font-extrabold text-green-700">{item.task}</span></div>
+                <div className="text-green-700 font-extrabold text-lg">Date: <span className="font-mono">{item.date}</span></div>
+                <div className="text-green-700 font-extrabold text-lg">Done by: <span className="text-green-700 font-extrabold text-lg">{item.done_by}</span></div>
+                <div className="text-green-700 font-extrabold text-lg">Type: <span className="text-green-700 font-extrabold text-lg">{item.type}</span></div>
+                <div className="text-green-700 font-extrabold text-lg">Quantity: <span className="text-green-700 font-extrabold text-lg">{item.quantity}</span></div>
+                <div className="text-green-700 font-extrabold text-lg">Base GVT: <span className="text-green-700 font-extrabold text-lg">{item.base_gvt}</span></div>
+                <div className="text-green-700 font-extrabold text-lg">GVT Earned: <span className="text-green-700 font-extrabold text-lg">{item.gvt_earned}</span></div>
+                {isNew && <span className="mt-2 text-green-600 font-semibold">New!</span>}
+              </div>
+            );
+          })}
         </div>
       )}
     </main>
