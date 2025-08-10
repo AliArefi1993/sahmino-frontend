@@ -1,3 +1,69 @@
+# Sahmino Frontend
+
+This is the frontend for the Sahmino project, built with Next.js and Tailwind CSS. It provides a user interface for creating and listing items, which are managed by the Django backend API.
+
+## Features
+- Create new items with fields: Date, Done by, Task, Type, Quantity, Base GVT, GVT Earned
+- List all items
+- Bold and green input fields for visibility
+- No placeholder text in input boxes before typing
+- Responsive and modern UI
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- npm
+
+### Installation
+1. Clone the repository:
+	 ```bash
+	 git clone https://github.com/AliArefi1993/sahmino-frontend.git
+	 cd sahmino-frontend
+	 ```
+2. Install dependencies:
+	 ```bash
+	 npm install
+	 ```
+3. Start the development server:
+	 ```bash
+	 npm run dev
+	 ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### API Connection
+- The frontend expects the backend API to be running at `http://localhost:8000`.
+- Endpoints used:
+	- `GET /api/items/` — List all items
+	- `POST /api/items/create/` — Create a new item
+
+## Project Structure
+```
+sahmino-frontend/
+	src/app/
+		page.tsx           # Homepage
+		items/
+			page.tsx         # List items page
+			create/page.tsx  # Create item form
+	README.md
+```
+
+## Styling
+- Uses Tailwind CSS for all styling.
+- Input fields are bold and green for visibility.
+- No placeholder text is shown before typing.
+
+## Useful Notes for Future Sessions
+- All input fields in the create item form are styled for maximum visibility (bold, green, no placeholder).
+- Navigation is set up between homepage, items list, and create item pages.
+- If you need to add new fields or change styling, edit `src/app/items/create/page.tsx`.
+- Backend API endpoints are hardcoded to `http://localhost:8000`.
+- For further UI improvements, use Tailwind classes and inline styles as needed.
+- If you want to add more pages, follow the structure in `src/app/`.
+- For backend changes, see the Django project in the `sahmino` folder.
+
+## License
+MIT
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
