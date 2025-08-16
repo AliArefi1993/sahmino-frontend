@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 
 interface Item {
@@ -28,6 +29,9 @@ export default function ItemsPage() {
   return (
     <main className="max-w-4xl mx-auto py-12">
       <h1 className="text-4xl font-extrabold text-blue-700 mb-8 text-center drop-shadow">All Items</h1>
+        <div style={{ marginBottom: '1rem' }}>
+          <Link href="/"> Back</Link>
+        </div>
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
       ) : items.length === 0 ? (

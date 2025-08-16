@@ -35,7 +35,7 @@ This is the frontend for the Sahmino project, built with Next.js and Tailwind CS
 - The frontend expects the backend API to be running at `http://localhost:8000`.
 - Endpoints used:
 	- `GET /api/items/` — List all items
-	- `POST /api/items/create/` — Create a new item
+	- `POST /api/items/` — Create a new item
 
 ## Project Structure
 ```
