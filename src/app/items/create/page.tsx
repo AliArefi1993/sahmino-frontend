@@ -376,25 +376,26 @@ export default function CreateItemPage() {
           ) : existingItems.length === 0 ? (
             <p className="text-center text-gray-500">No tasks found.</p>
           ) : (
-            <table className="w-full border">
-              <thead>
-                <tr className="bg-blue-100">
-                  <th className="p-2 text-gray-700">Date</th>
-                  <th className="p-2 text-gray-700">Done by</th>
-                  <th className="p-2 text-gray-700">Task</th>
-                  <th className="p-2 text-gray-700">Type</th>
-                  <th className="p-2 text-gray-700">Quantity</th>
-                  <th className="p-2 text-gray-700">Base GVT</th>
-                  <th className="p-2 text-gray-700">GVT Earned</th>
-                  <th className="p-2 text-gray-700">Status</th>
-                  <th className="p-2 text-gray-700">Actions</th>
-                </tr>
-              </thead>
+            <div className="overflow-hidden rounded-lg shadow-md">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gradient-to-r from-blue-50 to-blue-100">
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Date</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Done by</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider" style={{ width: '40%' }}>Task</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Type</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">QTY</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Base GVT</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">GVT Earned</th>
+                    <th className="p-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                    <th className="p-3 text-center text-sm font-semibold text-gray-700 uppercase tracking-wider">Act</th>
+                  </tr>
+                </thead>
               <tbody>
                 {existingItems.map((item, idx) => {
                   const isEditing = editingRowId === item.id;
                   return (
-                    <tr key={item.id || idx} className="border-b">
+                    <tr key={item.id || idx} className="border-b odd:bg-white even:bg-gray-50 odd:shadow-sm hover:bg-blue-50 transition-colors">
                       {isEditing ? (
                         <>
                           <td className="p-2">
@@ -417,7 +418,7 @@ export default function CreateItemPage() {
                               ))}
                             </select>
                           </td>
-                          <td className="p-2">
+                          <td className="p-2" style={{ width: '40%' }}>
                             <input
                               value={editingRowValues.task || ''}
                               onChange={e => handleRowEditChange('task', e.target.value)}
@@ -477,36 +478,36 @@ export default function CreateItemPage() {
                             <button
                               className="text-green-600 font-bold px-2 py-1 rounded hover:bg-green-100"
                               onClick={() => saveRowEdit(item.id)}
-                            >Save</button>
+                            >💾</button>
                             <button
                               className="text-gray-600 font-bold px-2 py-1 rounded hover:bg-gray-100"
                               onClick={cancelRowEdit}
-                            >Cancel</button>
+                            >✖</button>
                             <button
                               className="text-red-600 font-bold px-2 py-1 rounded hover:bg-red-100"
                               onClick={() => handleDelete(item.id)}
-                            >Delete</button>
+                            >🗑️</button>
                           </td>
                         </>
                       ) : (
                         <>
-                          <td className="p-2">{item.date}</td>
-                          <td className="p-2">{item.done_by}</td>
-                          <td className="p-2">{item.task}</td>
-                          <td className="p-2">{item.type}</td>
-                          <td className="p-2">{item.quantity}</td>
-                          <td className="p-2">{item.base_gvt}</td>
-                          <td className="p-2">{item.gvt_earned}</td>
-                          <td className="p-2">{item.status}</td>
-                          <td className="p-2 text-center flex gap-2 justify-center">
+                          <td className="p-3 text-sm text-gray-700">{item.date}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.done_by}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.task}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.type}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.quantity}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.base_gvt}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.gvt_earned}</td>
+                          <td className="p-3 text-sm text-gray-700">{item.status}</td>
+                          <td className="p-3 text-center flex gap-2 justify-center">
                             <button
                               className="text-blue-600 font-bold px-2 py-1 rounded hover:bg-blue-100"
                               onClick={() => startRowEdit(item)}
-                            >Update</button>
+                            >✏️</button>
                             <button
                               className="text-red-600 font-bold px-2 py-1 rounded hover:bg-red-100"
                               onClick={() => handleDelete(item.id)}
-                            >Delete</button>
+                            >🗑️</button>
                           </td>
                         </>
                       )}
@@ -515,6 +516,7 @@ export default function CreateItemPage() {
                 })}
               </tbody>
             </table>
+            </div>
           )}
         </div>
       </div>
