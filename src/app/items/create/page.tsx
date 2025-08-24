@@ -391,28 +391,128 @@ export default function CreateItemPage() {
                 </tr>
               </thead>
               <tbody>
-                {existingItems.map((item, idx) => (
-                  <tr key={item.id || idx} className="border-b">
-                    <td className="p-2">{item.date}</td>
-                    <td className="p-2">{item.done_by}</td>
-                    <td className="p-2">{item.task}</td>
-                    <td className="p-2">{item.type}</td>
-                    <td className="p-2">{item.quantity}</td>
-                    <td className="p-2">{item.base_gvt}</td>
-                    <td className="p-2">{item.gvt_earned}</td>
-                    <td className="p-2">{item.status}</td>
-                    <td className="p-2 text-center flex gap-2 justify-center">
-                      <button
-                        className="text-blue-600 font-bold px-2 py-1 rounded hover:bg-blue-100"
-                        onClick={() => startEdit(item)}
-                      >Update</button>
-                      <button
-                        className="text-red-600 font-bold px-2 py-1 rounded hover:bg-red-100"
-                        onClick={() => handleDelete(item.id)}
-                      >Delete</button>
-                    </td>
-                  </tr>
-                ))}
+                {existingItems.map((item, idx) => {
+                  const isEditing = editingRowId === item.id;
+                  return (
+                    <tr key={item.id || idx} className="border-b">
+                      {isEditing ? (
+                        <>
+                          <td className="p-2">
+                            <input
+                              type="date"
+                              value={editingRowValues.date || today}
+                              onChange={e => handleRowEditChange('date', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            />
+                          </td>
+                          <td className="p-2">
+                            <select
+                              value={editingRowValues.done_by || ''}
+                              onChange={e => handleRowEditChange('done_by', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            >
+                              <option value="">Select</option>
+                              {allowedDoneBy.map(d => (
+                                <option key={d} value={d}>{d}</option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className="p-2">
+                            <input
+                              value={editingRowValues.task || ''}
+                              onChange={e => handleRowEditChange('task', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            />
+                          </td>
+                          <td className="p-2">
+                            <select
+                              value={editingRowValues.type || ''}
+                              onChange={e => handleRowEditChange('type', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            >
+                              <option value="">Select</option>
+                              {allowedTypes.map(t => (
+                                <option key={t} value={t}>{t}</option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className="p-2">
+                            <input
+                              type="number"
+                              value={editingRowValues.quantity || ''}
+                              onChange={e => handleRowEditChange('quantity', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            />
+                          </td>
+                          <td className="p-2">
+                            <input
+                              type="number"
+                              step="0.01"
+                              value={editingRowValues.base_gvt || ''}
+                              onChange={e => handleRowEditChange('base_gvt', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            />
+                          </td>
+                          <td className="p-2">
+                            <input
+                              type="number"
+                              step="0.01"
+                              value={editingRowValues.gvt_earned || ''}
+                              readOnly
+                              className="border p-1 rounded w-full bg-gray-100"
+                            />
+                          </td>
+                          <td className="p-2">
+                            <select
+                              value={editingRowValues.status || ''}
+                              onChange={e => handleRowEditChange('status', e.target.value)}
+                              className="border p-1 rounded w-full"
+                            >
+                              {allowedStatus.map(s => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className="p-2 text-center flex gap-2 justify-center">
+                            <button
+                              className="text-green-600 font-bold px-2 py-1 rounded hover:bg-green-100"
+                              onClick={() => saveRowEdit(item.id)}
+                            >Save</button>
+                            <button
+                              className="text-gray-600 font-bold px-2 py-1 rounded hover:bg-gray-100"
+                              onClick={cancelRowEdit}
+                            >Cancel</button>
+                            <button
+                              className="text-red-600 font-bold px-2 py-1 rounded hover:bg-red-100"
+                              onClick={() => handleDelete(item.id)}
+                            >Delete</button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td className="p-2">{item.date}</td>
+                          <td className="p-2">{item.done_by}</td>
+                          <td className="p-2">{item.task}</td>
+                          <td className="p-2">{item.type}</td>
+                          <td className="p-2">{item.quantity}</td>
+                          <td className="p-2">{item.base_gvt}</td>
+                          <td className="p-2">{item.gvt_earned}</td>
+                          <td className="p-2">{item.status}</td>
+                          <td className="p-2 text-center flex gap-2 justify-center">
+                            <button
+                              className="text-blue-600 font-bold px-2 py-1 rounded hover:bg-blue-100"
+                              onClick={() => startRowEdit(item)}
+                            >Update</button>
+                            <button
+                              className="text-red-600 font-bold px-2 py-1 rounded hover:bg-red-100"
+                              onClick={() => handleDelete(item.id)}
+                            >Delete</button>
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}
