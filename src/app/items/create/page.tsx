@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import React, { useState, useEffect } from "react";
+import { authorizedFetch } from "../../../lib/auth";
 
 export default function CreateItemPage() {
   // State for allowed status
@@ -10,9 +11,9 @@ export default function CreateItemPage() {
 
   // Fetch allowed done_by from backend
   useEffect(() => {
-    fetch("http://localhost:8000/api/done-by/")
-      .then(res => res.json())
-      .then(data => {
+    authorizedFetch("http://localhost:8000/api/done-by/")
+      .then((res: any) => res.json())
+      .then((data: any) => {
         setAllowedDoneBy(data.done_by || []);
       });
   }, []);
@@ -21,9 +22,9 @@ export default function CreateItemPage() {
 
   // Fetch allowed types from backend
   useEffect(() => {
-    fetch("http://localhost:8000/api/item-types/")
-      .then(res => res.json())
-      .then(data => {
+    authorizedFetch("http://localhost:8000/api/item-types/")
+      .then((res: any) => res.json())
+      .then((data: any) => {
         setAllowedTypes(data.types || []);
       });
   }, []);
@@ -44,9 +45,9 @@ export default function CreateItemPage() {
   // Helper to refresh existing items
   const refreshExistingItems = () => {
     setLoadingExisting(true);
-    fetch("http://localhost:8000/api/items/")
-      .then(res => res.json())
-      .then(data => {
+    authorizedFetch("http://localhost:8000/api/items/")
+      .then((res: any) => res.json())
+      .then((data: any) => {
         setExistingItems(data);
         setLoadingExisting(false);
       });
@@ -55,9 +56,9 @@ export default function CreateItemPage() {
   const [loadingExisting, setLoadingExisting] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/items/")
-      .then(res => res.json())
-      .then(data => {
+    authorizedFetch("http://localhost:8000/api/items/")
+      .then((res: any) => res.json())
+      .then((data: any) => {
         setExistingItems(data);
         setLoadingExisting(false);
       });

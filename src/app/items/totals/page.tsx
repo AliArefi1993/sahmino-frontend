@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { authorizedFetch } from "../../../lib/auth";
 
 type Total = {
   done_by: string;
@@ -39,9 +40,9 @@ export default function TotalsPage() {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:8000/api/done-by/totals/")
-      .then((r) => r.json())
-      .then((data) => {
+    authorizedFetch("http://localhost:8000/api/done-by/totals/")
+      .then((r: any) => r.json())
+      .then((data: any) => {
         setTotals(data.totals || []);
       })
       .catch(() => setTotals([]))

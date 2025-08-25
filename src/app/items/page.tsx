@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
+import { authorizedFetch } from "../../lib/auth";
 
 interface Item {
   id: number;
@@ -18,10 +19,21 @@ export default function ItemsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/items/")
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
+    // fetch items and defensively ensure we always set an array
+    authorizedFetch("http://localhost:8000/api/items/")
+      .then((res: any) => res.json())
+      .then((data: any) => {
+        let list: any[] = [];
+        if (Array.isArray(data)) list = data;
+        else if (Array.isArray(data.results)) list = data.results;
+        else if (Array.isArray(data.items)) list = data.items;
+        else if (Array.isArray(data.totals)) list = data.totals; // fallback if wrong endpoint returned
+        else list = [];
+        setItems(list);
+        setLoading(false);
+      })
+      .catch(() => {
+        setItems([]);
         setLoading(false);
       });
   }, []);
