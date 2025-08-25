@@ -2,18 +2,23 @@
 import React, { useState } from "react";
 import { obtainToken, clearTokens } from "../../lib/auth";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const search = useSearchParams();
+  const router = useRouter();
+  const next = search.get("next") || "/";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMessage("");
     try {
       await obtainToken(username, password);
-      setMessage("Logged in successfully.");
+  // redirect to next
+  router.push(next);
     } catch (err: any) {
       setMessage(err.message || "Login failed");
     }
